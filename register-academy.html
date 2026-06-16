@@ -1,0 +1,64 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Register Academy — Unresume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link rel="stylesheet" href="css/globals.css">
+<link rel="stylesheet" href="css/navbar.css">
+<style>
+body{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:40px 24px}
+.auth-orb1{position:fixed;width:500px;height:500px;background:radial-gradient(circle,rgba(128,64,216,.1) 0%,transparent 70%);top:-100px;left:-150px;border-radius:50%;pointer-events:none}
+.auth-card{background:var(--bg-card);border:1px solid var(--border);border-radius:24px;padding:36px 40px;width:100%;max-width:480px;position:relative;z-index:1}
+@media(max-width:520px){.auth-card{padding:28px 22px}}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:420px){.grid2{grid-template-columns:1fr}}
+.submit-btn{width:100%;padding:13px;background:linear-gradient(135deg,#8040d8,#5b6cf5);border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s;margin-top:4px}
+.submit-btn:hover{opacity:.9}
+</style>
+</head>
+<body>
+<div class="auth-orb1"></div>
+<div class="auth-card">
+  <a href="register.html" style="display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--text3);text-decoration:none;margin-bottom:16px"><span class="material-symbols-rounded" style="font-size:16px">arrow_back</span> Back</a>
+
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
+    <div style="width:44px;height:44px;border-radius:12px;background:rgba(128,64,216,.12);border:1px solid rgba(128,64,216,.25);display:flex;align-items:center;justify-content:center">
+      <span class="material-symbols-rounded" style="font-size:22px;color:var(--purple)">menu_book</span>
+    </div>
+    <div>
+      <h1 style="font-family:var(--font-display);font-size:22px;font-weight:800;color:var(--text1);margin-bottom:2px">Register Academy</h1>
+      <p style="font-size:12.5px;color:var(--text4)">Partner with companies. Place your students.</p>
+    </div>
+  </div>
+
+  <form style="display:flex;flex-direction:column;gap:16px" onsubmit="handleSubmit(event)">
+    <div class="form-field"><label class="form-label">Academy Name</label><div class="input-wrap"><span class="material-symbols-rounded">school</span><input type="text" placeholder="NextGen Academy" required></div></div>
+    <div class="grid2">
+      <div class="form-field"><label class="form-label">Website</label><div class="input-wrap"><input type="url" placeholder="https://…"></div></div>
+      <div class="form-field"><label class="form-label">City</label><div class="input-wrap"><input type="text" placeholder="Mumbai"></div></div>
+    </div>
+    <div class="form-field"><label class="form-label">Contact Person</label><div class="input-wrap"><span class="material-symbols-rounded">person</span><input type="text" placeholder="Full name" required></div></div>
+    <div class="form-field"><label class="form-label">Contact Email</label><div class="input-wrap"><span class="material-symbols-rounded">mail</span><input type="email" placeholder="contact@academy.com" required></div></div>
+    <div class="form-field"><label class="form-label">Students per Batch</label><div class="input-wrap"><span class="material-symbols-rounded">group</span><input type="number" placeholder="e.g. 40" min="1"></div></div>
+    <div class="form-field"><label class="form-label">Password</label><div class="input-wrap"><span class="material-symbols-rounded">lock</span><input type="password" placeholder="Min 8 characters" required minlength="8"></div></div>
+    <button type="submit" class="submit-btn" id="submitBtn">Create Academy Account</button>
+  </form>
+
+  <p style="margin-top:20px;text-align:center;font-size:13.5px;color:var(--text3)">Have an account? <a href="login.html" style="color:var(--brand);font-weight:700;text-decoration:none">Sign In →</a></p>
+</div>
+
+<script src="js/components.js"></script>
+<script>
+function handleSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('submitBtn');
+  btn.innerHTML = '<span class="spinner"></span>';
+  btn.disabled = true;
+  setTimeout(() => { location.href = 'academy-dashboard.html'; }, 900);
+}
+</script>
+</body>
+</html>

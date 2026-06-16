@@ -1,0 +1,307 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Task Workplace — Unresume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link rel="stylesheet" href="css/globals.css">
+<link rel="stylesheet" href="css/navbar.css">
+<style>
+.wp-root{display:flex;height:100vh;overflow:hidden;flex-direction:column}
+.wp-topbar{height:56px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:16px;padding:0 20px;background:var(--bg-card);flex-shrink:0;position:sticky;top:0;z-index:50}
+.wp-logo{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-size:14px;font-weight:800;color:var(--text1)}
+.wp-logo .logo-icon{width:28px;height:28px;border-radius:7px;background:linear-gradient(135deg,#00c4ff,#5b6cf5,#8040d8);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff}
+.wp-task-name{font-size:13.5px;font-weight:700;color:var(--text2);padding-left:16px;border-left:1px solid var(--border);flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wp-timer{display:flex;align-items:center;gap:6px;font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--text1);background:var(--bg-elevated);border:1px solid var(--border);border-radius:10px;padding:6px 14px}
+.wp-body{display:flex;flex:1;overflow:hidden}
+/* Sidebar panel */
+.wp-side{width:320px;border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto;flex-shrink:0;background:var(--bg-base)}
+.wp-side-sec{padding:18px 20px;border-bottom:1px solid var(--border)}
+.wp-side-title{font-size:11.5px;font-weight:800;color:var(--text4);text-transform:uppercase;letter-spacing:.07em;margin-bottom:10px}
+.brief-text{font-size:13.5px;color:var(--text3);line-height:1.7}
+.req-item{display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--text2);line-height:1.5;padding:5px 0}
+.req-item::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--brand);flex-shrink:0;margin-top:6px}
+.rubric-wrap{display:flex;flex-direction:column;gap:10px}
+.rubric-item-name{font-size:12.5px;color:var(--text2);font-weight:600;margin-bottom:4px}
+.rubric-pts{font-size:11px;color:var(--text4);font-weight:700;float:right}
+/* Main workspace */
+.wp-main{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.wp-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--bg-card);flex-shrink:0}
+.wp-tab{padding:14px 20px;font-size:13.5px;font-weight:700;color:var(--text4);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.wp-tab.active,.wp-tab:hover{color:var(--text1);border-bottom-color:var(--brand)}
+.wp-pane{flex:1;padding:28px 32px;display:none}
+.wp-pane.active{display:flex;flex-direction:column;gap:20px}
+/* File type cards */
+.file-cards{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media(max-width:600px){.file-cards{grid-template-columns:1fr}}
+.file-card{border-radius:16px;padding:22px 18px;display:flex;flex-direction:column;gap:10px;border:1px solid var(--border)}
+.file-card-title{font-size:13.5px;font-weight:800;color:var(--text1);display:flex;align-items:center;gap:8px}
+.file-card p{font-size:12.5px;color:var(--text3);line-height:1.6}
+.upload-zone{border:2px dashed var(--border);border-radius:12px;padding:28px 20px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s}
+.upload-zone:hover{border-color:rgba(91,108,245,.45);background:rgba(91,108,245,.04)}
+.upload-zone input[type=file]{display:none}
+.upload-zone label{cursor:pointer;display:block}
+/* Portfolio toggle section */
+.port-toggle-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:16px 18px;display:flex;align-items:center;gap:14px}
+.submit-sec{padding:24px 32px;border-top:1px solid var(--border);background:var(--bg-card);display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.submitted-view{display:none;flex-direction:column;align-items:center;text-align:center;padding:80px 40px;gap:16px}
+</style>
+</head>
+<body>
+<div class="wp-root">
+  <!-- Topbar -->
+  <div class="wp-topbar">
+    <div class="wp-logo">
+      <div style="background:#fff;border-radius:8px;padding:3px 9px;display:flex;align-items:center;box-shadow:0 2px 10px rgba(91,108,245,.2)">
+        <img src="images/unresume-logo.png" alt="Unresume" style="height:22px;display:block;width:auto">
+      </div>
+    </div>
+    <div class="wp-task-name" id="wpTitle">Loading task…</div>
+    <div class="wp-timer" id="timerDisplay">
+      <span class="material-symbols-rounded" style="font-size:16px;color:var(--text4)">timer</span>
+      <span id="timerVal">--:--</span>
+    </div>
+    <a href="jobs.html" class="btn-ghost" style="font-size:12.5px;padding:7px 14px;white-space:nowrap">← Exit</a>
+  </div>
+
+  <div class="wp-body">
+    <!-- Task info sidebar -->
+    <div class="wp-side" id="wpSide">
+      <div class="wp-side-sec">
+        <div class="wp-side-title">Brief</div>
+        <p class="brief-text" id="briefText"></p>
+      </div>
+      <div class="wp-side-sec">
+        <div class="wp-side-title">Requirements</div>
+        <div id="reqList"></div>
+      </div>
+      <div class="wp-side-sec">
+        <div class="wp-side-title">Scoring Rubric</div>
+        <div class="rubric-wrap" id="rubricList"></div>
+      </div>
+    </div>
+
+    <!-- Workspace main -->
+    <div class="wp-main">
+      <div class="wp-tabs">
+        <div class="wp-tab active" onclick="showPane('submit',this)">Submit Work</div>
+        <div class="wp-tab" onclick="showPane('guidelines',this)">Guidelines</div>
+      </div>
+
+      <!-- Submit pane -->
+      <div class="wp-pane active" id="submitPane">
+        <div style="background:rgba(91,108,245,.05);border:1px solid rgba(91,108,245,.15);border-radius:14px;padding:14px 16px;display:flex;gap:10px">
+          <span class="material-symbols-rounded" style="font-size:18px;color:var(--brand);flex-shrink:0;margin-top:1px">info</span>
+          <p style="font-size:13px;color:var(--text3);line-height:1.6">Submit <strong style="color:var(--text1)">two files</strong> — a Working File (private, for the interviewer) and a Final Output (your public portfolio piece). The interviewer reviews your working file; your output is shared based on your visibility settings.</p>
+        </div>
+
+        <div class="file-cards">
+          <!-- Working file -->
+          <div class="file-card" style="background:rgba(239,68,68,.03);border-color:rgba(239,68,68,.2)">
+            <div class="file-card-title">
+              <span class="material-symbols-rounded" style="font-size:18px;color:#ef4444">lock</span>
+              Working File
+              <span style="margin-left:auto;font-size:11px;font-weight:800;padding:3px 9px;border-radius:5px;background:rgba(239,68,68,.1);color:#ef4444;border:1px solid rgba(239,68,68,.2)">Private</span>
+            </div>
+            <p>Your process, drafts, and source files. Only the interviewer (and you) can see this. Never shared publicly.</p>
+            <div class="upload-zone" id="workZone">
+              <label for="workFile">
+                <span class="material-symbols-rounded" style="font-size:32px;color:var(--text4);display:block;margin-bottom:8px">upload_file</span>
+                <div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:4px">Upload working file</div>
+                <div style="font-size:12px;color:var(--text4)">Any format · max 50MB</div>
+                <input type="file" id="workFile" onchange="onFileSelect('workFile','workZone','workName')">
+              </label>
+            </div>
+            <div id="workName" style="display:none;font-size:12.5px;color:var(--text2);font-weight:600;display:none;align-items:center;gap:8px">
+              <span class="material-symbols-rounded" style="font-size:16px;color:#10b981">check_circle</span>
+              <span></span>
+            </div>
+          </div>
+
+          <!-- Final output -->
+          <div class="file-card" style="background:rgba(16,185,129,.03);border-color:rgba(16,185,129,.2)">
+            <div class="file-card-title">
+              <span class="material-symbols-rounded" style="font-size:18px;color:#10b981">visibility</span>
+              Final Output
+              <span style="margin-left:auto;font-size:11px;font-weight:800;padding:3px 9px;border-radius:5px;background:rgba(16,185,129,.1);color:#10b981;border:1px solid rgba(16,185,129,.2)">Portfolio</span>
+            </div>
+            <p>Your polished deliverable — image, PDF, URL, or zip. This goes into your portfolio and can be set public or private.</p>
+            <div class="upload-zone" id="outZone">
+              <label for="outFile">
+                <span class="material-symbols-rounded" style="font-size:32px;color:var(--text4);display:block;margin-bottom:8px">add_photo_alternate</span>
+                <div style="font-size:13px;font-weight:700;color:var(--text2);margin-bottom:4px">Upload final output</div>
+                <div style="font-size:12px;color:var(--text4)">Image / PDF / ZIP / URL · max 50MB</div>
+                <input type="file" id="outFile" onchange="onFileSelect('outFile','outZone','outName')">
+              </label>
+            </div>
+            <div id="outName" style="display:none;font-size:12.5px;color:var(--text2);font-weight:600;align-items:center;gap:8px">
+              <span class="material-symbols-rounded" style="font-size:16px;color:#10b981">check_circle</span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Portfolio toggle -->
+        <div class="port-toggle-card">
+          <span class="material-symbols-rounded" style="font-size:22px;color:var(--brand)">photo_library</span>
+          <div style="flex:1">
+            <div style="font-size:13.5px;font-weight:700;color:var(--text1)">Add to public portfolio</div>
+            <div style="font-size:12px;color:var(--text4);margin-top:2px">Final output will be visible on your public profile</div>
+          </div>
+          <div class="toggle-track on" id="portToggle" onclick="this.classList.toggle('on');updatePortLabel(this)"></div>
+          <span id="portLabel" style="font-size:12.5px;font-weight:700;color:#10b981;min-width:50px">Public</span>
+        </div>
+
+        <!-- Note -->
+        <div class="form-field">
+          <label class="form-label">Note to Interviewer (optional)</label>
+          <textarea style="width:100%;min-height:90px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:11px;padding:12px 14px;color:var(--text1);font-size:14px;font-family:var(--font-body);resize:vertical;outline:none;transition:border-color .15s;box-sizing:border-box" placeholder="Any context or notes about your submission…"></textarea>
+        </div>
+      </div>
+
+      <!-- Guidelines pane -->
+      <div class="wp-pane" id="guidelinesPane">
+        <div style="background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px 22px">
+          <h3 style="font-family:var(--font-display);font-size:17px;font-weight:800;color:var(--text1);margin-bottom:14px">Submission Guidelines</h3>
+          <div style="display:flex;flex-direction:column;gap:12px" id="guideList"></div>
+        </div>
+      </div>
+
+      <!-- Submit button bar -->
+      <div class="submit-sec" id="submitBar">
+        <div style="font-size:13px;color:var(--text3)"><span id="filesStatus">0/2 files uploaded</span></div>
+        <button class="btn-primary" id="submitBtn" onclick="handleSubmit()" style="opacity:.5;cursor:not-allowed" disabled>
+          <span class="material-symbols-rounded" style="font-size:18px">send</span> Submit Task
+        </button>
+      </div>
+
+      <!-- Submitted state -->
+      <div class="submitted-view" id="submittedView">
+        <div style="width:72px;height:72px;border-radius:20px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);display:flex;align-items:center;justify-content:center">
+          <span class="material-symbols-rounded" style="font-size:36px;color:#10b981">task_alt</span>
+        </div>
+        <h2 style="font-family:var(--font-display);font-size:26px;font-weight:800;color:var(--text1);letter-spacing:-.02em">Submitted!</h2>
+        <p style="font-size:15px;color:var(--text3);max-width:400px;line-height:1.7">Your work has been sent to the interviewer. You'll get a score notification once reviewed.</p>
+        <div style="display:flex;gap:12px;margin-top:8px;flex-wrap:wrap;justify-content:center">
+          <a href="candidate-dashboard.html" class="btn-primary">Back to Dashboard</a>
+          <a href="jobs.html" class="btn-ghost">Browse More Tasks</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="js/components.js"></script>
+<script src="js/data.js"></script>
+<script>
+// Load task
+const id = new URLSearchParams(location.search).get('id');
+const task = getTasks().find(t => t.id === (id || '1'));
+
+if (task) {
+  document.title = task.title + ' — Unresume';
+  document.getElementById('wpTitle').textContent = task.title;
+  document.getElementById('briefText').textContent = task.brief;
+  document.getElementById('reqList').innerHTML = task.requirements.map(r =>
+    `<div class="req-item">${r}</div>`
+  ).join('');
+  document.getElementById('rubricList').innerHTML = task.rubric.map(r => {
+    const pct = (r.points / 40 * 100).toFixed(0);
+    return `<div>
+      <div class="rubric-item-name">${r.criterion}<span class="rubric-pts">${r.points}pts</span></div>
+      <div class="rubric-bar"><div class="rubric-bar-inner" style="width:${pct}%"></div></div>
+    </div>`;
+  }).join('');
+
+  document.getElementById('guideList').innerHTML = [
+    'Read the brief carefully before starting.',
+    'Your working file is completely private — only you and the interviewer can access it.',
+    'Your final output goes into your portfolio. You control public/private visibility.',
+    'Submit only original work. Plagiarism results in a permanent ban.',
+    `Time limit: ${task.timeLimit}. Start the timer only when you are ready.`,
+    'Screenshots, images, PDFs, live URLs, and zip files are all accepted as output.'
+  ].map(g => `<div style="display:flex;gap:10px;align-items:flex-start">
+    <span class="material-symbols-rounded" style="font-size:17px;color:var(--brand);margin-top:1px;flex-shrink:0">check</span>
+    <span style="font-size:13.5px;color:var(--text2);line-height:1.6">${g}</span>
+  </div>`).join('');
+}
+
+// Timer
+let seconds = 0, timerInterval = null, timerStarted = false;
+function startTimer() {
+  if (timerStarted) return;
+  timerStarted = true;
+  timerInterval = setInterval(() => {
+    seconds++;
+    const h = Math.floor(seconds/3600).toString().padStart(2,'0');
+    const m = Math.floor((seconds%3600)/60).toString().padStart(2,'0');
+    const s = (seconds%60).toString().padStart(2,'0');
+    document.getElementById('timerVal').textContent = seconds >= 3600 ? `${h}:${m}:${s}` : `${m}:${s}`;
+  }, 1000);
+}
+document.getElementById('timerVal').addEventListener('click', startTimer);
+document.getElementById('timerVal').title = 'Click to start timer';
+document.getElementById('timerVal').style.cursor = 'pointer';
+document.getElementById('timerVal').textContent = '00:00';
+
+// File uploads
+let filesUploaded = 0;
+function onFileSelect(inputId, zoneId, nameId) {
+  const f = document.getElementById(inputId).files[0];
+  if (!f) return;
+  const zone = document.getElementById(zoneId);
+  const nameEl = document.getElementById(nameId);
+  zone.style.borderColor = 'rgba(16,185,129,.4)';
+  zone.style.background = 'rgba(16,185,129,.04)';
+  nameEl.style.display = 'flex';
+  nameEl.querySelector('span:last-child').textContent = f.name;
+  filesUploaded++;
+  if (!timerStarted) startTimer();
+  updateSubmitBtn();
+}
+function updateSubmitBtn() {
+  const status = `${filesUploaded}/2 files uploaded`;
+  document.getElementById('filesStatus').textContent = status;
+  const btn = document.getElementById('submitBtn');
+  if (filesUploaded >= 2) {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+  }
+}
+function updatePortLabel(el) {
+  const lbl = document.getElementById('portLabel');
+  if (el.classList.contains('on')) {
+    lbl.textContent = 'Public';
+    lbl.style.color = '#10b981';
+  } else {
+    lbl.textContent = 'Private';
+    lbl.style.color = 'var(--text4)';
+  }
+}
+
+function handleSubmit() {
+  const btn = document.getElementById('submitBtn');
+  btn.innerHTML = '<span class="spinner"></span>';
+  btn.disabled = true;
+  clearInterval(timerInterval);
+  setTimeout(() => {
+    document.getElementById('submitBar').style.display = 'none';
+    document.querySelector('#submitPane').style.display = 'none';
+    document.querySelector('.wp-tabs').style.display = 'none';
+    const sv = document.getElementById('submittedView');
+    sv.style.display = 'flex';
+  }, 1200);
+}
+
+function showPane(name, el) {
+  document.querySelectorAll('.wp-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('submitPane').classList.toggle('active', name === 'submit');
+  document.getElementById('guidelinesPane').classList.toggle('active', name === 'guidelines');
+}
+</script>
+</body>
+</html>
