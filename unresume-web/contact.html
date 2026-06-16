@@ -1,0 +1,121 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Contact — Unresume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link rel="stylesheet" href="css/globals.css">
+<link rel="stylesheet" href="css/navbar.css">
+<style>
+.ct-wrap{max-width:960px;margin:0 auto;padding:72px 24px 80px}
+.ct-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+@media(max-width:720px){.ct-grid{grid-template-columns:1fr}}
+.ct-left h1{font-family:var(--font-display);font-size:clamp(28px,5vw,40px);font-weight:800;color:var(--text1);letter-spacing:-.03em;margin-bottom:12px}
+.ct-left p{font-size:15px;color:var(--text3);line-height:1.7;margin-bottom:32px}
+.info-block{display:flex;flex-direction:column;gap:14px}
+.info-item{display:flex;align-items:center;gap:14px;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:16px 18px}
+.info-icon{width:40px;height:40px;border-radius:11px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.info-label{font-size:11.5px;color:var(--text4);font-weight:700;text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px}
+.info-val{font-size:14px;font-weight:700;color:var(--text1)}
+.ct-form{background:var(--bg-card);border:1px solid var(--border);border-radius:24px;padding:32px 28px;display:flex;flex-direction:column;gap:18px}
+.ct-form h2{font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--text1);margin-bottom:4px}
+textarea.form-textarea{width:100%;min-height:130px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:11px;padding:12px 14px;color:var(--text1);font-size:14px;font-family:var(--font-body);resize:vertical;outline:none;transition:border-color .15s;box-sizing:border-box}
+textarea.form-textarea:focus{border-color:rgba(91,108,245,.45)}
+textarea.form-textarea::placeholder{color:var(--text4)}
+.ct-submit{padding:13px;background:linear-gradient(135deg,#5b6cf5,#8040d8);border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s;width:100%}
+.ct-submit:hover{opacity:.9}
+.success-view{display:none;flex-direction:column;align-items:center;text-align:center;padding:32px 16px;gap:14px}
+.success-icon{width:64px;height:64px;border-radius:18px;background:rgba(16,185,129,.1);border:1px solid rgba(16,185,129,.25);display:flex;align-items:center;justify-content:center}
+</style>
+</head>
+<body>
+<div id="navbar"></div>
+
+<div class="ct-wrap">
+  <div class="ct-grid">
+    <div class="ct-left">
+      <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(91,108,245,.1);border:1px solid rgba(91,108,245,.2);border-radius:20px;padding:6px 16px;font-size:13px;font-weight:700;color:var(--brand);margin-bottom:20px">
+        <span class="material-symbols-rounded" style="font-size:16px">mail</span> Get in touch
+      </div>
+      <h1>We'd love to <span class="grad-text">hear from you</span></h1>
+      <p>Questions about how Unresume works? Partnership inquiries? Or just want to say hi? Drop us a message and we'll get back within 24 hours.</p>
+      <div class="info-block">
+        <div class="info-item">
+          <div class="info-icon" style="background:rgba(91,108,245,.1);border:1px solid rgba(91,108,245,.2)"><span class="material-symbols-rounded" style="font-size:20px;color:var(--brand)">mail</span></div>
+          <div><div class="info-label">Email</div><div class="info-val">hello@unresume.io</div></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon" style="background:rgba(0,196,255,.1);border:1px solid rgba(0,196,255,.2)"><span class="material-symbols-rounded" style="font-size:20px;color:var(--cyan)">location_on</span></div>
+          <div><div class="info-label">Location</div><div class="info-val">Mumbai, India</div></div>
+        </div>
+        <div class="info-item">
+          <div class="info-icon" style="background:rgba(128,64,216,.1);border:1px solid rgba(128,64,216,.2)"><span class="material-symbols-rounded" style="font-size:20px;color:var(--purple)">schedule</span></div>
+          <div><div class="info-label">Response Time</div><div class="info-val">Within 24 hours</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ct-form" id="formCard">
+      <div>
+        <h2>Send a message</h2>
+        <p style="font-size:13.5px;color:var(--text3);margin-top:4px">We read every message personally.</p>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:16px" id="formFields">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px">
+          <div class="form-field"><label class="form-label">First Name</label><div class="input-wrap"><input type="text" placeholder="Your name" required></div></div>
+          <div class="form-field"><label class="form-label">Last Name</label><div class="input-wrap"><input type="text" placeholder="Last name" required></div></div>
+        </div>
+        <div class="form-field"><label class="form-label">Email</label><div class="input-wrap"><span class="material-symbols-rounded">mail</span><input type="email" placeholder="you@example.com" required></div></div>
+        <div class="form-field">
+          <label class="form-label">Topic</label>
+          <div class="input-wrap" style="padding:0">
+            <select style="width:100%;background:none;border:none;outline:none;padding:12px 14px;color:var(--text1);font-size:14px;font-family:var(--font-body);cursor:pointer">
+              <option value="" style="background:var(--bg-elevated)">Select a topic</option>
+              <option style="background:var(--bg-elevated)">General Inquiry</option>
+              <option style="background:var(--bg-elevated)">Partnership / Academy</option>
+              <option style="background:var(--bg-elevated)">Company / Hiring</option>
+              <option style="background:var(--bg-elevated)">Bug Report</option>
+              <option style="background:var(--bg-elevated)">Feature Request</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field"><label class="form-label">Message</label><textarea class="form-textarea" placeholder="Tell us what's on your mind…" required></textarea></div>
+        <button type="button" class="ct-submit" id="sendBtn" onclick="handleSend()">
+          <span class="material-symbols-rounded" style="font-size:18px">send</span> Send Message
+        </button>
+      </div>
+
+      <div class="success-view" id="successView">
+        <div class="success-icon"><span class="material-symbols-rounded" style="font-size:30px;color:#10b981">check_circle</span></div>
+        <h3 style="font-family:var(--font-display);font-size:20px;font-weight:800;color:var(--text1)">Message sent!</h3>
+        <p style="font-size:14px;color:var(--text3);line-height:1.6">Thanks for reaching out. We'll get back to you within 24 hours.</p>
+        <button onclick="resetForm()" style="font-size:13px;color:var(--brand);background:none;border:none;cursor:pointer;font-weight:700;margin-top:4px">Send another →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="footer"></div>
+<script src="js/components.js"></script>
+<script>
+function handleSend() {
+  const btn = document.getElementById('sendBtn');
+  btn.innerHTML = '<span class="spinner"></span>';
+  btn.disabled = true;
+  setTimeout(() => {
+    document.getElementById('formFields').style.display = 'none';
+    document.getElementById('successView').style.display = 'flex';
+  }, 1000);
+}
+function resetForm() {
+  document.getElementById('formFields').style.display = '';
+  document.getElementById('successView').style.display = 'none';
+  const btn = document.getElementById('sendBtn');
+  btn.innerHTML = '<span class="material-symbols-rounded" style="font-size:18px">send</span> Send Message';
+  btn.disabled = false;
+}
+</script>
+</body>
+</html>

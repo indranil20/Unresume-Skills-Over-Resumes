@@ -1,0 +1,140 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Leaderboard — Unresume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link rel="stylesheet" href="css/globals.css">
+<link rel="stylesheet" href="css/navbar.css">
+<style>
+.lb-hero{background:linear-gradient(160deg,rgba(91,108,245,.08),rgba(128,64,216,.08));border-bottom:1px solid var(--border);padding:56px 0 48px;text-align:center}
+.lb-hero h1{font-family:var(--font-display);font-size:clamp(28px,5vw,44px);font-weight:800;color:var(--text1);letter-spacing:-.03em;margin-bottom:10px}
+.lb-hero p{font-size:15px;color:var(--text3);max-width:520px;margin:0 auto 24px}
+.lb-filter{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center}
+.lb-tab{padding:8px 18px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:20px;font-size:13px;font-weight:700;color:var(--text3);cursor:pointer;transition:all .15s}
+.lb-tab.active,.lb-tab:hover{background:rgba(91,108,245,.12);border-color:rgba(91,108,245,.35);color:var(--brand)}
+.lb-wrap{max-width:860px;margin:0 auto;padding:48px 24px 80px}
+/* Podium */
+.podium{display:flex;align-items:flex-end;justify-content:center;gap:12px;margin-bottom:48px}
+.podium-col{display:flex;flex-direction:column;align-items:center;gap:6px}
+.podium-avatar{border-radius:50%;border:2px solid var(--border);overflow:hidden;background:var(--bg-elevated);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-weight:800}
+.podium-block{width:100%;border-radius:12px 12px 0 0;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:var(--text1);font-family:var(--font-display)}
+.podium-name{font-size:13px;font-weight:700;color:var(--text1);text-align:center}
+.podium-score{font-size:12px;color:var(--text4);font-weight:600}
+/* Table */
+.lb-table{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;overflow:hidden}
+.lb-head{display:grid;grid-template-columns:56px 1fr 120px 120px 100px;gap:0;background:var(--bg-elevated);padding:12px 20px;border-bottom:1px solid var(--border)}
+.lb-head span{font-size:11.5px;font-weight:700;color:var(--text4);text-transform:uppercase;letter-spacing:.06em}
+.lb-row{display:grid;grid-template-columns:56px 1fr 120px 120px 100px;gap:0;padding:14px 20px;border-bottom:1px solid var(--border);align-items:center;transition:background .12s;text-decoration:none}
+.lb-row:last-child{border-bottom:none}
+.lb-row:hover{background:rgba(255,255,255,.018)}
+.lb-rank{font-family:var(--font-mono);font-size:13.5px;font-weight:700;color:var(--text4)}
+.lb-rank.top3{color:var(--text1)}
+.lb-avatar{width:36px;height:36px;border-radius:50%;background:var(--bg-elevated);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:13px;font-weight:800;margin-right:12px;flex-shrink:0}
+.lb-uname{font-size:13px;color:var(--text4);font-weight:600;margin-top:1px}
+.lb-score{font-family:var(--font-mono);font-size:14px;font-weight:700;color:var(--text1)}
+.lb-tasks{font-size:13.5px;color:var(--text2);font-weight:600}
+.badge-pill{font-size:11px;font-weight:800;padding:3px 10px;border-radius:6px}
+@media(max-width:700px){
+  .lb-head,.lb-row{grid-template-columns:44px 1fr 80px 80px}
+  .lb-head span:last-child,.lb-row .badge-wrap{display:none}
+}
+</style>
+</head>
+<body>
+<div id="navbar"></div>
+
+<div class="lb-hero">
+  <h1><span class="grad-text">Global</span> Leaderboard</h1>
+  <p>Rankings based on verified task scores. Real skills, real proof.</p>
+  <div class="lb-filter">
+    <button class="lb-tab active" onclick="setFilter('all',this)">All Skills</button>
+    <button class="lb-tab" onclick="setFilter('React',this)">React</button>
+    <button class="lb-tab" onclick="setFilter('Python',this)">Python</button>
+    <button class="lb-tab" onclick="setFilter('UI/UX Design',this)">UI/UX</button>
+    <button class="lb-tab" onclick="setFilter('Data Science',this)">Data Science</button>
+  </div>
+</div>
+
+<div class="lb-wrap">
+  <div class="podium" id="podium"></div>
+  <div class="lb-table">
+    <div class="lb-head">
+      <span>Rank</span><span>Candidate</span><span>Score</span><span>Tasks</span><span>Badge</span>
+    </div>
+    <div id="lbBody"></div>
+  </div>
+</div>
+
+<div id="footer"></div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="js/components.js"></script>
+<script src="js/data.js"></script>
+<script>
+let filter = 'all';
+function setFilter(f, btn) {
+  filter = f;
+  document.querySelectorAll('.lb-tab').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+const badgeColor = {Elite:'#f59e0b',Pro:'var(--brand)',Rising:'var(--cyan)'};
+const bgMap = {Elite:'rgba(245,158,11,.12)',Pro:'rgba(91,108,245,.12)',Rising:'rgba(0,196,255,.12)'};
+const gradients = [
+  'linear-gradient(135deg,#00c4ff,#5b6cf5)',
+  'linear-gradient(135deg,#5b6cf5,#8040d8)',
+  'linear-gradient(135deg,#8040d8,#ec4899)',
+  'linear-gradient(135deg,#10b981,#00c4ff)',
+  'linear-gradient(135deg,#f59e0b,#ef4444)',
+  'linear-gradient(135deg,#6366f1,#8040d8)',
+];
+
+function render() {
+  let candidates = getCandidates().filter(c => filter === 'all' || c.skills.includes(filter));
+  candidates = [...candidates].sort((a,b) => b.score - a.score);
+
+  // Podium (top 3)
+  const top3 = candidates.slice(0,3);
+  const podiumOrder = top3.length >= 3 ? [top3[1], top3[0], top3[2]] : top3;
+  const heights = [120, 160, 100];
+  const sizes = [72, 88, 64];
+  const podiumGolds = ['#9ca3af', '#f59e0b', '#cd7c32'];
+  const podiumRanks = [2, 1, 3];
+
+  document.getElementById('podium').innerHTML = podiumOrder.map((c, i) => {
+    const initials = c.name.split(' ').map(w=>w[0]).join('').slice(0,2);
+    return `<div class="podium-col" style="width:${sizes[i]+30}px">
+      <div style="font-size:${i===1?20:15}px">${i===1?'🥇':i===0?'🥈':'🥉'}</div>
+      <div class="podium-avatar" style="width:${sizes[i]}px;height:${sizes[i]}px;font-size:${i===1?22:16}px;background:${gradients[candidates.indexOf(c)]};border-color:${podiumGolds[i]};border-width:3px;color:#fff">${initials}</div>
+      <div class="podium-name">${c.name}</div>
+      <div class="podium-score">${c.score} pts</div>
+      <div class="podium-block" style="height:${heights[i]}px;background:${i===1?'rgba(245,158,11,.08)':i===0?'rgba(156,163,175,.06)':'rgba(205,124,50,.06)'};border-color:${podiumGolds[i]}22">${podiumRanks[i]}</div>
+    </div>`;
+  }).join('');
+
+  // Table
+  document.getElementById('lbBody').innerHTML = candidates.map((c, i) => {
+    const initials = c.name.split(' ').map(w=>w[0]).join('').slice(0,2);
+    const isTop = i < 3;
+    return `<a href="candidate-profile.html?u=${c.username}" class="lb-row">
+      <span class="lb-rank ${isTop?'top3':''}">${isTop?['🥇','🥈','🥉'][i]:('#'+(i+1))}</span>
+      <div style="display:flex;align-items:center">
+        <div class="lb-avatar" style="background:${gradients[i%gradients.length]};color:#fff;border:none">${initials}</div>
+        <div><div style="font-size:14px;font-weight:700;color:var(--text1)">${c.name}</div><div class="lb-uname">@${c.username}</div></div>
+      </div>
+      <span class="lb-score">${c.score}</span>
+      <span class="lb-tasks">${c.tasksCompleted}</span>
+      <span class="badge-wrap"><span class="badge-pill" style="background:${bgMap[c.badge]||'var(--bg-elevated)'};color:${badgeColor[c.badge]||'var(--text4)'}">${c.badge}</span></span>
+    </a>`;
+  }).join('');
+
+  gsap.from('.lb-row', {opacity:0, y:12, duration:.35, stagger:.04, ease:'power2.out'});
+}
+
+render();
+</script>
+</body>
+</html>

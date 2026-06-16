@@ -1,0 +1,152 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Sign In — Unresume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link rel="stylesheet" href="css/globals.css">
+<link rel="stylesheet" href="css/navbar.css">
+<style>
+body{display:flex;align-items:center;justify-content:center;min-height:100vh;padding:40px 24px}
+.auth-orb1{position:fixed;width:500px;height:500px;background:radial-gradient(circle,rgba(91,108,245,.12) 0%,transparent 70%);top:-100px;left:-150px;border-radius:50%;pointer-events:none}
+.auth-orb2{position:fixed;width:400px;height:400px;background:radial-gradient(circle,rgba(128,64,216,.1) 0%,transparent 70%);bottom:-80px;right:-80px;border-radius:50%;pointer-events:none}
+.auth-card{background:var(--bg-card);border:1px solid var(--border);border-radius:24px;padding:36px 40px;width:100%;max-width:440px;position:relative;z-index:1}
+@media(max-width:480px){.auth-card{padding:28px 24px}}
+.auth-logo{display:flex;align-items:center;gap:8px;text-decoration:none;margin-bottom:28px}
+.auth-title{font-family:var(--font-display);font-size:26px;font-weight:800;color:var(--text1);letter-spacing:-.025em;margin-bottom:6px}
+.auth-sub{font-size:14px;color:var(--text3);margin-bottom:24px}
+.role-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:14px}
+@media(max-width:380px){.role-grid{grid-template-columns:repeat(3,1fr)}}
+.company-sub{background:var(--bg-elevated);border:1px solid var(--border-light);border-radius:14px;padding:14px 14px 12px;margin-bottom:18px}
+.sub-role-btn{display:flex;align-items:center;gap:7px;padding:9px 14px;background:var(--bg-card);border:1px solid var(--border);border-radius:10px;font-size:12.5px;font-weight:700;color:var(--text3);cursor:pointer;transition:all .15s;width:100%}
+.sub-role-btn:hover{border-color:var(--border-light);color:var(--text1)}
+.sub-role-btn.active{background:rgba(0,196,255,.1);border-color:rgba(0,196,255,.35);color:var(--cyan)}
+.role-btn{display:flex;flex-direction:column;align-items:center;gap:4px;padding:10px 6px;background:var(--bg-elevated);border:1px solid var(--border);border-radius:12px;font-size:11.5px;font-weight:700;color:var(--text3);cursor:pointer;transition:all .15s}
+.role-btn:hover{border-color:var(--border-light);color:var(--text1)}
+.role-btn.active{background:rgba(91,108,245,.12);border-color:rgba(91,108,245,.4);color:var(--brand)}
+.auth-form{display:flex;flex-direction:column;gap:18px}
+.forgot-link{font-size:12.5px;color:var(--brand);font-weight:600;text-decoration:none}
+.forgot-link:hover{text-decoration:underline}
+.pw-toggle{background:none;border:none;cursor:pointer;color:var(--text4);display:flex;padding:0;transition:color .15s}
+.pw-toggle:hover{color:var(--text2)}
+.submit-btn{width:100%;padding:13px;background:linear-gradient(135deg,#5b6cf5,#8040d8);border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s;margin-top:4px}
+.submit-btn:hover{opacity:.9}
+.auth-alt{margin-top:22px;text-align:center;font-size:13.5px;color:var(--text3)}
+.auth-alt a{color:var(--brand);font-weight:700;text-decoration:none}
+.auth-alt a:hover{text-decoration:underline}
+</style>
+</head>
+<body>
+<div class="auth-orb1"></div>
+<div class="auth-orb2"></div>
+
+<div class="auth-card">
+  <a href="index.html" class="auth-logo" style="display:inline-flex;margin-bottom:4px">
+    <div>
+      <img src="images/unresume-logo.png" alt="Unresume" style="height:70px;display:block;width:auto">
+    </div>
+  </a>
+
+  <h1 class="auth-title">Welcome back</h1>
+  <p class="auth-sub">Sign in to your Unresume account</p>
+
+  <div class="role-grid">
+    <button class="role-btn active" onclick="setRole('candidate',this)">
+      <span class="material-symbols-rounded" style="font-size:16px">school</span>Candidate
+    </button>
+    <button class="role-btn" onclick="setRole('company',this)">
+      <span class="material-symbols-rounded" style="font-size:16px">business</span>Company
+    </button>
+    <button class="role-btn" onclick="setRole('academy',this)">
+      <span class="material-symbols-rounded" style="font-size:16px">menu_book</span>Academy
+    </button>
+  </div>
+
+  <div id="companySubRole" class="company-sub" style="display:none">
+    <div style="font-size:11px;font-weight:700;color:var(--text4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Your role at the company</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      <button class="sub-role-btn active" onclick="setSubRole('hr',this)">
+        <span class="material-symbols-rounded" style="font-size:15px">manage_accounts</span>HR / Recruiter
+      </button>
+      <button class="sub-role-btn" onclick="setSubRole('interviewer',this)">
+        <span class="material-symbols-rounded" style="font-size:15px">rate_review</span>Interviewer
+      </button>
+    </div>
+  </div>
+
+  <form class="auth-form" onsubmit="handleLogin(event)">
+    <div class="form-field">
+      <label class="form-label">Email</label>
+      <div class="input-wrap">
+        <span class="material-symbols-rounded">mail</span>
+        <input type="email" placeholder="you@example.com" required>
+      </div>
+    </div>
+
+    <div class="form-field">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <label class="form-label">Password</label>
+        <a href="forgot-password.html" class="forgot-link">Forgot password?</a>
+      </div>
+      <div class="input-wrap">
+        <span class="material-symbols-rounded">lock</span>
+        <input type="password" id="pwInput" placeholder="••••••••" required>
+        <button type="button" class="pw-toggle" onclick="togglePw()">
+          <span class="material-symbols-rounded" style="font-size:18px" id="pwIcon">visibility</span>
+        </button>
+      </div>
+    </div>
+
+    <button type="submit" class="submit-btn" id="loginBtn">
+      Sign In <span class="material-symbols-rounded" style="font-size:18px">arrow_forward</span>
+    </button>
+  </form>
+
+  <p class="auth-alt">Don't have an account? <a href="register.html">Create one →</a></p>
+</div>
+
+<script src="js/components.js"></script>
+<script>
+const destinations = { candidate:'candidate-dashboard.html', hr:'hr-dashboard.html', interviewer:'interviewer-dashboard.html', academy:'academy-dashboard.html' };
+let role = 'candidate';
+let subRole = 'hr';
+
+function setRole(r, btn) {
+  document.querySelectorAll('.role-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const sub = document.getElementById('companySubRole');
+  if (r === 'company') {
+    sub.style.display = 'block';
+    role = subRole;
+  } else {
+    role = r;
+    sub.style.display = 'none';
+  }
+}
+
+function setSubRole(r, btn) {
+  subRole = r;
+  role = r;
+  document.querySelectorAll('.sub-role-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+}
+
+function togglePw() {
+  const inp = document.getElementById('pwInput');
+  const icon = document.getElementById('pwIcon');
+  inp.type = inp.type === 'password' ? 'text' : 'password';
+  icon.textContent = inp.type === 'password' ? 'visibility' : 'visibility_off';
+}
+
+function handleLogin(e) {
+  e.preventDefault();
+  const btn = document.getElementById('loginBtn');
+  btn.innerHTML = '<span class="spinner"></span>';
+  btn.disabled = true;
+  setTimeout(() => { location.href = destinations[role]; }, 900);
+}
+</script>
+</body>
+</html>

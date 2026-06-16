@@ -1,0 +1,189 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Job Detail — Unresume</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<link rel="stylesheet" href="css/globals.css">
+<link rel="stylesheet" href="css/navbar.css">
+<style>
+.jd-page{min-height:100vh;padding:40px 24px 80px;position:relative}
+.jd-inner{max-width:1140px;margin:0 auto}
+.breadcrumb{display:flex;align-items:center;gap:8px;margin-bottom:28px;font-size:13px}
+.back-link{display:inline-flex;align-items:center;gap:4px;color:var(--text3);text-decoration:none;font-weight:600;transition:color .15s}
+.back-link:hover{color:var(--text1)}
+.jd-layout{display:grid;grid-template-columns:1fr 320px;gap:24px;align-items:start}
+@media(max-width:900px){.jd-layout{grid-template-columns:1fr}}
+.jd-main{display:flex;flex-direction:column;gap:20px}
+.jd-header{display:flex;gap:18px;align-items:flex-start}
+.job-logo-lg{width:56px;height:56px;border-radius:14px;background:var(--bg-elevated);border:1px solid var(--border-light);display:flex;align-items:center;justify-content:center;font-size:28px;flex-shrink:0}
+.jd-company{font-size:12.5px;color:var(--text4);font-weight:600;margin-bottom:4px}
+.jd-title{font-family:var(--font-display);font-size:24px;font-weight:800;color:var(--text1);letter-spacing:-.02em;margin-bottom:12px}
+.jd-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.meta-badge{padding:3px 10px;border-radius:6px;font-size:12px;font-weight:700}
+.section-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:24px}
+.card-title{font-family:var(--font-display);font-size:16px;font-weight:800;color:var(--text1);margin-bottom:14px}
+.body-text{font-size:14px;color:var(--text2);line-height:1.8}
+.req-list{list-style:none;display:flex;flex-direction:column;gap:10px}
+.req-item{display:flex;align-items:flex-start;gap:10px;font-size:14px;color:var(--text2);line-height:1.6}
+.skills-wrap{display:flex;flex-wrap:wrap;gap:8px}
+.skill-tag-lg{padding:5px 14px;background:rgba(91,108,245,.08);border:1px solid rgba(91,108,245,.2);border-radius:8px;font-size:13px;font-weight:600;color:var(--brand)}
+/* Task section */
+.task-section{background:var(--bg-card);border:1px solid rgba(0,196,255,.25);border-radius:20px;padding:28px;display:flex;flex-direction:column;gap:22px;position:relative;overflow:hidden}
+.task-section::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,#00c4ff,#5b6cf5)}
+.task-icon-wrap{width:44px;height:44px;border-radius:12px;background:rgba(0,196,255,.12);border:1px solid rgba(0,196,255,.25);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.task-title{font-family:var(--font-display);font-size:18px;font-weight:800;color:var(--text1);letter-spacing:-.015em}
+.task-brief{background:var(--bg-elevated);border-radius:12px;padding:18px 20px}
+.file-type-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:500px){.file-type-grid{grid-template-columns:1fr}}
+.file-type-card{background:var(--bg-elevated);border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:flex;gap:12px;align-items:flex-start}
+.apply-btn{width:100%;padding:14px;background:linear-gradient(135deg,#00c4ff,#5b6cf5);border:none;border-radius:12px;font-size:15px;font-weight:700;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;transition:opacity .2s;text-decoration:none;box-shadow:0 4px 20px rgba(91,108,245,.35)}
+.apply-btn:hover{opacity:.9}
+/* Aside */
+.jd-aside{display:flex;flex-direction:column;gap:16px;position:sticky;top:80px}
+.aside-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;padding:22px}
+.aside-title{font-family:var(--font-display);font-size:14px;font-weight:800;color:var(--text1);margin-bottom:10px}
+.aside-apply-btn{display:block;width:100%;padding:11px;background:linear-gradient(135deg,#00c4ff,#5b6cf5);border:none;border-radius:10px;font-size:14px;font-weight:700;color:#fff;cursor:pointer;text-align:center;text-decoration:none;transition:opacity .15s;margin-top:12px}
+.aside-apply-btn:hover{opacity:.88}
+.step-row{display:flex;gap:10px;align-items:flex-start;margin-top:10px}
+.step-num{width:22px;height:22px;border-radius:6px;background:rgba(91,108,245,.15);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;color:var(--brand);flex-shrink:0}
+</style>
+</head>
+<body>
+<div id="navbar"></div>
+<div class="page-wrap">
+  <div class="orb orb-2"></div>
+  <div class="jd-page">
+    <div class="jd-inner">
+      <div class="breadcrumb">
+        <a href="jobs.html" class="back-link"><span class="material-symbols-rounded" style="font-size:16px">arrow_back</span> All Jobs</a>
+        <span style="color:var(--text4)">/</span>
+        <span id="breadTitle" style="color:var(--text3)">Loading…</span>
+      </div>
+      <div class="jd-layout">
+        <div class="jd-main" id="jdMain">
+          <div style="color:var(--text4);padding:40px 0">Loading job…</div>
+        </div>
+        <aside class="jd-aside" id="jdAside"></aside>
+      </div>
+    </div>
+  </div>
+</div>
+<div id="footer"></div>
+<script src="js/components.js"></script>
+<script src="js/data.js"></script>
+<script>
+const params = new URLSearchParams(location.search);
+const id = parseInt(params.get('id'));
+const jobs = getJobs(), tasks = getTasks();
+const job = jobs.find(j => j.id === id) || jobs[0];
+const task = job.hasTask ? tasks.find(t => t.jobId === job.id) : null;
+
+document.title = `${job.title} — Unresume`;
+document.getElementById('breadTitle').textContent = job.title;
+
+document.getElementById('jdMain').innerHTML = `
+  <div class="section-card jd-header">
+    <div class="job-logo-lg">${job.logo}</div>
+    <div>
+      <div class="jd-company">${job.company}</div>
+      <div class="jd-title">${job.title}</div>
+      <div class="jd-meta">
+        <span class="meta-badge" style="background:rgba(255,255,255,.05);border:1px solid var(--border);color:var(--text3)">${job.category}</span>
+        ${job.hasTask?`<span class="meta-badge" style="background:rgba(0,196,255,.1);border:1px solid rgba(0,196,255,.25);color:var(--cyan)"><span class="material-symbols-rounded" style="font-size:13px;vertical-align:middle">task_alt</span> Includes Task</span>`:''}
+        ${job.featured?`<span class="meta-badge" style="background:rgba(91,108,245,.12);border:1px solid rgba(91,108,245,.25);color:var(--brand)"><span class="material-symbols-rounded" style="font-size:12px;vertical-align:middle">bolt</span> Featured</span>`:''}
+      </div>
+    </div>
+  </div>
+
+  <div class="section-card">
+    <div class="card-title">About this role</div>
+    <p class="body-text">${job.description}</p>
+  </div>
+
+  <div class="section-card">
+    <div class="card-title">Requirements</div>
+    <ul class="req-list">
+      ${job.requirements.map(r=>`<li class="req-item"><span class="material-symbols-rounded" style="font-size:16px;color:var(--brand);flex-shrink:0">check_circle</span>${r}</li>`).join('')}
+    </ul>
+  </div>
+
+  <div class="section-card">
+    <div class="card-title">Skills Assessed</div>
+    <div class="skills-wrap">${job.skills.map(s=>`<span class="skill-tag-lg">${s}</span>`).join('')}</div>
+  </div>
+
+  ${task ? `
+  <div class="task-section">
+    <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:16px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:10px">
+        <div class="task-icon-wrap"><span class="material-symbols-rounded" style="font-size:22px;color:var(--cyan)">assignment</span></div>
+        <div>
+          <div style="font-size:11px;font-weight:700;color:var(--cyan);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px">Skill Task</div>
+          <div class="task-title">${task.title}</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:14px;font-size:12.5px;color:var(--text4);font-weight:600">
+        <span><span class="material-symbols-rounded" style="font-size:14px;vertical-align:middle">schedule</span> ${task.timeLimit}</span>
+        <span><span class="material-symbols-rounded" style="font-size:14px;vertical-align:middle">group</span> ${task.submissionsCount} submissions</span>
+      </div>
+    </div>
+
+    <div class="task-brief">
+      <div style="font-size:13.5px;font-weight:700;color:var(--text1);margin-bottom:8px">Task Brief</div>
+      <p class="body-text">${task.brief}</p>
+    </div>
+
+    <div>
+      <div style="font-size:13.5px;font-weight:700;color:var(--text1);margin-bottom:12px">Scoring Rubric <span style="font-size:11.5px;font-weight:500;color:var(--text4)">(you see this before you submit)</span></div>
+      ${task.rubric.map(r=>`
+        <div class="rubric-row">
+          <div style="font-size:13px;color:var(--text2);font-weight:600">${r.criterion}</div>
+          <div class="rubric-bar-outer"><div class="rubric-bar-inner" style="width:${(r.points/40)*100}%"></div></div>
+          <div style="font-size:12px;font-weight:700;color:var(--brand);font-family:var(--font-mono);text-align:right">${r.points}pts</div>
+        </div>`).join('')}
+    </div>
+
+    <div class="file-type-grid">
+      <div class="file-type-card">
+        <span class="material-symbols-rounded" style="font-size:18px;color:var(--brand)">lock</span>
+        <div><div style="font-size:13px;font-weight:700;color:var(--text1)">Working File</div><div style="font-size:12px;color:var(--text4)">Private — only you and the reviewer</div></div>
+      </div>
+      <div class="file-type-card">
+        <span class="material-symbols-rounded" style="font-size:18px;color:var(--cyan)">public</span>
+        <div><div style="font-size:13px;font-weight:700;color:var(--text1)">Final Output</div><div style="font-size:12px;color:var(--text4)">Public — shown in your portfolio</div></div>
+      </div>
+    </div>
+
+    <a href="task-workplace.html?id=${task.id}" class="apply-btn">
+      <span class="material-symbols-rounded" style="font-size:18px">arrow_forward</span>
+      Start Task & Apply
+    </a>
+  </div>` : `<div class="section-card" style="text-align:center"><p style="color:var(--text3);font-size:14px">This listing doesn't include a task. Contact the company to apply.</p></div>`}
+`;
+
+document.getElementById('jdAside').innerHTML = `
+  <div class="aside-card">
+    <div class="aside-title">Apply via Task</div>
+    <p style="font-size:13px;color:var(--text3);line-height:1.7">${job.hasTask?'Complete the task and submit. No resume, no cover letter — just your work.':'Contact the company directly to apply for this role.'}</p>
+    <a href="${task?`task-workplace.html?id=${task.id}`:'#'}" class="aside-apply-btn">${job.hasTask?'Start Task':'Contact Company'}</a>
+  </div>
+
+  <div class="aside-card">
+    <div class="aside-title">About ${job.company}</div>
+    <div style="display:flex;align-items:center;gap:10px;margin-top:8px">
+      <div style="width:38px;height:38px;border-radius:9px;background:var(--bg-elevated);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px">${job.logo}</div>
+      <div><div style="font-weight:700;color:var(--text1);font-size:14px">${job.company}</div><div style="font-size:12px;color:var(--text4)">${job.category}</div></div>
+    </div>
+    <a href="browse-candidates.html" style="display:block;margin-top:14px;font-size:13px;color:var(--brand);font-weight:600">Browse other candidates →</a>
+  </div>
+
+  <div class="aside-card">
+    <div class="aside-title">How it works</div>
+    ${['Complete the task','Get scored by reviewer','HR contacts top scorers'].map((s,i)=>`<div class="step-row"><div class="step-num">${i+1}</div><span style="font-size:13px;color:var(--text2);line-height:1.5">${s}</span></div>`).join('')}
+  </div>`;
+</script>
+</body>
+</html>
