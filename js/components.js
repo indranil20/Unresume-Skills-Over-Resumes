@@ -65,7 +65,7 @@ function renderFooter() {
       <div class="footer-top">
         <div>
           <a href="index.html" class="footer-logo" style="margin-bottom:14px">
-            <img src="images/unresume-logo.png" alt="Unresume" class="logo-img-sm" style="height:36px">
+            <img src="images/unresume-logo.png" alt="Unresume" class="logo-img-sm" style="height:80px">
           </a>
           <p class="footer-tagline">Skills over resumes — the future of skill-based hiring.</p>
         </div>
