@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="images/favicon.png">
 <title>Register Company — Unresume</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -26,6 +27,9 @@ body{display:flex;align-items:center;justify-content:center;min-height:100vh;pad
 <body>
 <div class="auth-orb1"></div>
 <div class="auth-card">
+  <a href="index.html" class="auth-logo" style="display:inline-flex;margin-bottom:14px">
+    <div><img src="images/unresume-logo.png" alt="Unresume" style="height:70px;display:block;width:auto"></div>
+  </a>
   <a href="register.html" style="display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--text3);text-decoration:none;margin-bottom:16px"><span class="material-symbols-rounded" style="font-size:16px">arrow_back</span> Back</a>
 
   <h1 style="font-family:var(--font-display);font-size:24px;font-weight:800;color:var(--text1);margin-bottom:6px">Register your company</h1>
@@ -45,14 +49,14 @@ body{display:flex;align-items:center;justify-content:center;min-height:100vh;pad
   </div>
 
   <form style="display:flex;flex-direction:column;gap:16px" onsubmit="handleSubmit(event)">
-    <div class="form-field"><label class="form-label">Company Name</label><div class="input-wrap"><span class="material-symbols-rounded">business</span><input type="text" placeholder="Acme Corp" required></div></div>
+    <div class="form-field"><label class="form-label">Company Name</label><div class="input-wrap"><span class="material-symbols-rounded">business</span><input type="text" placeholder="Acme Corp"></div></div>
     <div class="form-field"><label class="form-label">Website</label><div class="input-wrap"><span class="material-symbols-rounded">link</span><input type="url" placeholder="https://yourcompany.com"></div></div>
     <div class="grid2">
-      <div class="form-field"><label class="form-label">First Name</label><div class="input-wrap"><input type="text" placeholder="Alex" required></div></div>
-      <div class="form-field"><label class="form-label">Last Name</label><div class="input-wrap"><input type="text" placeholder="Smith" required></div></div>
+      <div class="form-field"><label class="form-label">First Name</label><div class="input-wrap"><input type="text" placeholder="Alex"></div></div>
+      <div class="form-field"><label class="form-label">Last Name</label><div class="input-wrap"><input type="text" placeholder="Smith"></div></div>
     </div>
-    <div class="form-field"><label class="form-label">Work Email</label><div class="input-wrap"><span class="material-symbols-rounded">mail</span><input type="email" placeholder="you@company.com" required></div></div>
-    <div class="form-field"><label class="form-label">Password</label><div class="input-wrap"><span class="material-symbols-rounded">lock</span><input type="password" placeholder="Min 8 characters" required minlength="8"></div></div>
+    <div class="form-field"><label class="form-label">Work Email</label><div class="input-wrap"><span class="material-symbols-rounded">mail</span><input type="email" placeholder="you@company.com"></div></div>
+    <div class="form-field"><label class="form-label">Password</label><div class="input-wrap"><span class="material-symbols-rounded">lock</span><input type="password" placeholder="Min 8 characters"></div></div>
     <button type="submit" class="submit-btn" id="submitBtn">Create Company Account</button>
   </form>
 
@@ -71,10 +75,7 @@ function setType(r) {
 }
 function handleSubmit(e) {
   e.preventDefault();
-  const btn = document.getElementById('submitBtn');
-  btn.innerHTML = '<span class="spinner"></span>';
-  btn.disabled = true;
-  setTimeout(() => { location.href = role==='hr'?'hr-dashboard.html':'interviewer-dashboard.html'; }, 900);
+  location.href = role==='hr'?'hr-dashboard.html':'interviewer-dashboard.html';
 }
 </script>
 </body>

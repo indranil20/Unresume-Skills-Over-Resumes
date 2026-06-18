@@ -267,6 +267,8 @@ img { max-width: 100%; display: block; }
   background: rgba(9,9,11,.8);
   backdrop-filter: blur(12px);
   flex-shrink: 0;
+  position: relative;
+  z-index: 50;
 }
 .topbar-search {
   flex: 1; max-width: 360px;

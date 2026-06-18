@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="images/favicon.png">
 <title>Register Academy — Unresume</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -22,6 +23,9 @@ body{display:flex;align-items:center;justify-content:center;min-height:100vh;pad
 <body>
 <div class="auth-orb1"></div>
 <div class="auth-card">
+  <a href="index.html" class="auth-logo" style="display:inline-flex;margin-bottom:14px">
+    <div><img src="images/unresume-logo.png" alt="Unresume" style="height:70px;display:block;width:auto"></div>
+  </a>
   <a href="register.html" style="display:inline-flex;align-items:center;gap:4px;font-size:13px;font-weight:600;color:var(--text3);text-decoration:none;margin-bottom:16px"><span class="material-symbols-rounded" style="font-size:16px">arrow_back</span> Back</a>
 
   <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px">
@@ -35,15 +39,15 @@ body{display:flex;align-items:center;justify-content:center;min-height:100vh;pad
   </div>
 
   <form style="display:flex;flex-direction:column;gap:16px" onsubmit="handleSubmit(event)">
-    <div class="form-field"><label class="form-label">Academy Name</label><div class="input-wrap"><span class="material-symbols-rounded">school</span><input type="text" placeholder="NextGen Academy" required></div></div>
+    <div class="form-field"><label class="form-label">Academy Name</label><div class="input-wrap"><span class="material-symbols-rounded">school</span><input type="text" placeholder="NextGen Academy"></div></div>
     <div class="grid2">
       <div class="form-field"><label class="form-label">Website</label><div class="input-wrap"><input type="url" placeholder="https://…"></div></div>
       <div class="form-field"><label class="form-label">City</label><div class="input-wrap"><input type="text" placeholder="Mumbai"></div></div>
     </div>
-    <div class="form-field"><label class="form-label">Contact Person</label><div class="input-wrap"><span class="material-symbols-rounded">person</span><input type="text" placeholder="Full name" required></div></div>
-    <div class="form-field"><label class="form-label">Contact Email</label><div class="input-wrap"><span class="material-symbols-rounded">mail</span><input type="email" placeholder="contact@academy.com" required></div></div>
+    <div class="form-field"><label class="form-label">Contact Person</label><div class="input-wrap"><span class="material-symbols-rounded">person</span><input type="text" placeholder="Full name"></div></div>
+    <div class="form-field"><label class="form-label">Contact Email</label><div class="input-wrap"><span class="material-symbols-rounded">mail</span><input type="email" placeholder="contact@academy.com"></div></div>
     <div class="form-field"><label class="form-label">Students per Batch</label><div class="input-wrap"><span class="material-symbols-rounded">group</span><input type="number" placeholder="e.g. 40" min="1"></div></div>
-    <div class="form-field"><label class="form-label">Password</label><div class="input-wrap"><span class="material-symbols-rounded">lock</span><input type="password" placeholder="Min 8 characters" required minlength="8"></div></div>
+    <div class="form-field"><label class="form-label">Password</label><div class="input-wrap"><span class="material-symbols-rounded">lock</span><input type="password" placeholder="Min 8 characters"></div></div>
     <button type="submit" class="submit-btn" id="submitBtn">Create Academy Account</button>
   </form>
 
@@ -54,10 +58,7 @@ body{display:flex;align-items:center;justify-content:center;min-height:100vh;pad
 <script>
 function handleSubmit(e) {
   e.preventDefault();
-  const btn = document.getElementById('submitBtn');
-  btn.innerHTML = '<span class="spinner"></span>';
-  btn.disabled = true;
-  setTimeout(() => { location.href = 'academy-dashboard.html'; }, 900);
+  location.href = 'academy-dashboard.html';
 }
 </script>
 </body>

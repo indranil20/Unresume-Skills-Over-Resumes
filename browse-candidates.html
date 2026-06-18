@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="images/favicon.png">
 <title>Browse Candidates — Unresume</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -9,14 +10,6 @@
 <link rel="stylesheet" href="css/globals.css">
 <link rel="stylesheet" href="css/navbar.css">
 <style>
-.bc-hero{padding:56px 0 44px;text-align:center;border-bottom:1px solid var(--border);background:linear-gradient(160deg,rgba(0,196,255,.06),rgba(91,108,245,.06))}
-.bc-hero h1{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);font-weight:800;color:var(--text1);letter-spacing:-.03em;margin-bottom:10px}
-.bc-hero p{font-size:14.5px;color:var(--text3);margin-bottom:28px}
-.search-bar{display:flex;align-items:center;gap:10px;background:var(--bg-card);border:1px solid var(--border);border-radius:14px;padding:11px 18px;max-width:480px;margin:0 auto;transition:border-color .15s}
-.search-bar:focus-within{border-color:rgba(91,108,245,.45)}
-.search-bar input{flex:1;background:none;border:none;outline:none;font-size:15px;color:var(--text1);font-family:var(--font-body)}
-.search-bar input::placeholder{color:var(--text4)}
-.bc-wrap{max-width:1100px;margin:0 auto;padding:40px 24px 80px}
 .bc-toolbar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:28px}
 .filter-pills{display:flex;gap:8px;flex-wrap:wrap;flex:1}
 .bc-count{font-size:13.5px;color:var(--text4);font-weight:600;margin-left:auto}
@@ -41,26 +34,60 @@
 </style>
 </head>
 <body>
-<div id="navbar"></div>
+<div class="dash-root">
+  <div id="sidebar" data-role="hr"></div>
+  <div class="dash-content">
+    <header class="dash-topbar">
+      <div class="topbar-search">
+        <span class="material-symbols-rounded" style="font-size:18px;color:var(--text4)">search</span>
+        <input type="text" id="searchInput" placeholder="Search by name or skill…" oninput="render()">
+      </div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div class="topbar-popover">
+          <button class="topbar-icon-btn" onclick="toggleTopbarPopover(this)"><span class="material-symbols-rounded" style="font-size:20px">notifications</span><span class="notif-dot"></span></button>
+          <div class="popover-panel notif-panel">
+            <div class="popover-head">Notifications <span class="mark-read" onclick="this.closest('.topbar-popover').querySelector('.notif-dot')?.remove()">Mark all read</span></div>
+            <div class="notif-list">
+              <div class="notif-item">
+                <div class="notif-icon" style="background:rgba(0,196,255,.12);color:var(--cyan)"><span class="material-symbols-rounded" style="font-size:17px">group</span></div>
+                <div><div class="notif-text">3 new candidates applied to Frontend Developer</div><div class="notif-time">1h ago</div></div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-icon" style="background:rgba(91,108,245,.12);color:var(--brand)"><span class="material-symbols-rounded" style="font-size:17px">event</span></div>
+                <div><div class="notif-text">Priya Sharma accepted your interview invite</div><div class="notif-time">4h ago</div></div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-icon" style="background:rgba(245,158,11,.12);color:#f59e0b"><span class="material-symbols-rounded" style="font-size:17px">schedule</span></div>
+                <div><div class="notif-text">Job listing "Backend Engineer" is expiring soon</div><div class="notif-time">1d ago</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <a href="chat.html" class="topbar-icon-btn"><span class="material-symbols-rounded" style="font-size:20px">chat</span></a>
+        <div class="topbar-popover">
+          <div class="topbar-avatar" style="background:linear-gradient(135deg,#00c4ff,#5b6cf5)" onclick="toggleTopbarPopover(this)">HR</div>
+          <div class="popover-panel avatar-panel">
+            <a href="#" class="avatar-menu-item" onclick="alert('Settings coming soon');return false"><span class="material-symbols-rounded" style="font-size:18px">settings</span> Account Settings</a>
+            <a href="login.html" class="avatar-menu-item danger"><span class="material-symbols-rounded" style="font-size:18px">logout</span> Sign Out</a>
+          </div>
+        </div>
+      </div>
+    </header>
+    <main class="dash-main">
+      <div style="margin-bottom:24px">
+        <h1 style="font-family:var(--font-display);font-size:clamp(18px,3vw,24px);font-weight:800;color:var(--text1);letter-spacing:-.02em;margin-bottom:4px">Browse <span class="grad-text">Top Talent</span></h1>
+        <p style="font-size:13px;color:var(--text3)">Find candidates proven through real tasks — not just CVs.</p>
+      </div>
 
-<div class="bc-hero">
-  <h1>Browse <span class="grad-text">Top Talent</span></h1>
-  <p>Find candidates proven through real tasks — not just CVs.</p>
-  <div class="search-bar">
-    <span class="material-symbols-rounded" style="font-size:20px;color:var(--text4)">search</span>
-    <input type="text" id="searchInput" placeholder="Search by name or skill…" oninput="render()">
+      <div class="bc-toolbar">
+        <div class="filter-pills" id="filterPills"></div>
+        <span class="bc-count" id="countLbl"></span>
+      </div>
+      <div class="cand-grid" id="candGrid"></div>
+    </main>
   </div>
 </div>
 
-<div class="bc-wrap">
-  <div class="bc-toolbar">
-    <div class="filter-pills" id="filterPills"></div>
-    <span class="bc-count" id="countLbl"></span>
-  </div>
-  <div class="cand-grid" id="candGrid"></div>
-</div>
-
-<div id="footer"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
 <script src="js/components.js"></script>
 <script src="js/data.js"></script>

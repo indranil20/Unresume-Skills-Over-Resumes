@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="images/favicon.png">
 <title>Sign In — Unresume</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -81,7 +82,7 @@ body{display:flex;align-items:center;justify-content:center;min-height:100vh;pad
       <label class="form-label">Email</label>
       <div class="input-wrap">
         <span class="material-symbols-rounded">mail</span>
-        <input type="email" placeholder="you@example.com" required>
+        <input type="email" placeholder="you@example.com">
       </div>
     </div>
 
@@ -92,7 +93,7 @@ body{display:flex;align-items:center;justify-content:center;min-height:100vh;pad
       </div>
       <div class="input-wrap">
         <span class="material-symbols-rounded">lock</span>
-        <input type="password" id="pwInput" placeholder="••••••••" required>
+        <input type="password" id="pwInput" placeholder="••••••••">
         <button type="button" class="pw-toggle" onclick="togglePw()">
           <span class="material-symbols-rounded" style="font-size:18px" id="pwIcon">visibility</span>
         </button>
@@ -142,10 +143,7 @@ function togglePw() {
 
 function handleLogin(e) {
   e.preventDefault();
-  const btn = document.getElementById('loginBtn');
-  btn.innerHTML = '<span class="spinner"></span>';
-  btn.disabled = true;
-  setTimeout(() => { location.href = destinations[role]; }, 900);
+  location.href = destinations[role];
 }
 </script>
 </body>

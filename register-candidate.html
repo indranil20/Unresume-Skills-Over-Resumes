@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="images/favicon.png">
 <title>Register as Candidate — Unresume</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -33,6 +34,9 @@ textarea.input-area::placeholder{color:var(--text4)}
 <body>
 <div class="auth-orb1"></div>
 <div class="auth-card">
+  <a href="index.html" class="auth-logo" style="display:inline-flex;margin-bottom:14px">
+    <div><img src="images/unresume-logo.png" alt="Unresume" style="height:70px;display:block;width:auto"></div>
+  </a>
   <a href="register.html" class="back-link"><span class="material-symbols-rounded" style="font-size:16px">arrow_back</span> Back</a>
   <div class="step-bar"><div class="step-dot active" id="s1"></div><div class="step-dot" id="s2"></div></div>
 
@@ -41,11 +45,11 @@ textarea.input-area::placeholder{color:var(--text4)}
 
   <form id="step1Form" style="display:flex;flex-direction:column;gap:18px">
     <div class="grid2">
-      <div class="form-field"><label class="form-label">First Name</label><div class="input-wrap"><input type="text" placeholder="Alex" required></div></div>
-      <div class="form-field"><label class="form-label">Last Name</label><div class="input-wrap"><input type="text" placeholder="Johnson" required></div></div>
+      <div class="form-field"><label class="form-label">First Name</label><div class="input-wrap"><input type="text" placeholder="Alex"></div></div>
+      <div class="form-field"><label class="form-label">Last Name</label><div class="input-wrap"><input type="text" placeholder="Johnson"></div></div>
     </div>
-    <div class="form-field"><label class="form-label">Email</label><div class="input-wrap"><span class="material-symbols-rounded">mail</span><input type="email" placeholder="you@example.com" required></div></div>
-    <div class="form-field"><label class="form-label">Password</label><div class="input-wrap"><span class="material-symbols-rounded">lock</span><input type="password" placeholder="Min 8 characters" required minlength="8"></div></div>
+    <div class="form-field"><label class="form-label">Email</label><div class="input-wrap"><span class="material-symbols-rounded">mail</span><input type="email" placeholder="you@example.com"></div></div>
+    <div class="form-field"><label class="form-label">Password</label><div class="input-wrap"><span class="material-symbols-rounded">lock</span><input type="password" placeholder="Min 8 characters"></div></div>
     <div class="form-field"><label class="form-label">Short Bio</label><textarea class="input-area" placeholder="Briefly describe yourself and your goals…"></textarea></div>
     <button type="submit" class="submit-btn">Continue <span class="material-symbols-rounded" style="font-size:18px">arrow_forward</span></button>
   </form>
@@ -90,10 +94,7 @@ document.getElementById('step1Form').addEventListener('submit', e => {
 
 document.getElementById('step2Form').addEventListener('submit', e => {
   e.preventDefault();
-  const btn = e.target.querySelector('button');
-  btn.innerHTML = '<span class="spinner"></span>';
-  btn.disabled = true;
-  setTimeout(() => { location.href = 'candidate-dashboard.html'; }, 900);
+  location.href = 'candidate-dashboard.html';
 });
 </script>
 </body>

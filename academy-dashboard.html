@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="images/favicon.png">
 <title>Academy Dashboard — Unresume</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -65,8 +66,33 @@
         <input type="text" placeholder="Search students…" oninput="filterStudents(this.value)">
       </div>
       <div style="display:flex;align-items:center;gap:8px">
-        <button class="topbar-icon-btn"><span class="material-symbols-rounded" style="font-size:20px">notifications</span><span class="notif-dot"></span></button>
-        <div class="topbar-avatar" style="background:linear-gradient(135deg,#8040d8,#5b6cf5)">AC</div>
+        <div class="topbar-popover">
+          <button class="topbar-icon-btn" onclick="toggleTopbarPopover(this)"><span class="material-symbols-rounded" style="font-size:20px">notifications</span><span class="notif-dot"></span></button>
+          <div class="popover-panel notif-panel">
+            <div class="popover-head">Notifications <span class="mark-read" onclick="this.closest('.topbar-popover').querySelector('.notif-dot')?.remove()">Mark all read</span></div>
+            <div class="notif-list">
+              <div class="notif-item">
+                <div class="notif-icon" style="background:rgba(0,196,255,.12);color:var(--cyan)"><span class="material-symbols-rounded" style="font-size:17px">work</span></div>
+                <div><div class="notif-text">TechCorp has 2 open referral slots</div><div class="notif-time">2h ago</div></div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-icon" style="background:rgba(91,108,245,.12);color:var(--brand)"><span class="material-symbols-rounded" style="font-size:17px">handshake</span></div>
+                <div><div class="notif-text">Neha Patel was placed at DataSoft</div><div class="notif-time">1d ago</div></div>
+              </div>
+              <div class="notif-item">
+                <div class="notif-icon" style="background:rgba(245,158,11,.12);color:#f59e0b"><span class="material-symbols-rounded" style="font-size:17px">school</span></div>
+                <div><div class="notif-text">5 new students need ID issuance</div><div class="notif-time">2d ago</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="topbar-popover">
+          <div class="topbar-avatar" style="background:linear-gradient(135deg,#8040d8,#5b6cf5)" onclick="toggleTopbarPopover(this)">AC</div>
+          <div class="popover-panel avatar-panel">
+            <a href="#" class="avatar-menu-item" onclick="alert('Settings coming soon');return false"><span class="material-symbols-rounded" style="font-size:18px">settings</span> Account Settings</a>
+            <a href="login.html" class="avatar-menu-item danger"><span class="material-symbols-rounded" style="font-size:18px">logout</span> Sign Out</a>
+          </div>
+        </div>
       </div>
     </header>
     <main class="dash-main">
@@ -102,7 +128,7 @@
       <div class="dash-cols">
         <div>
           <!-- Student roster -->
-          <div class="sec-head"><span class="sec-title">Student Roster</span><span id="studentCount" style="font-size:12px;color:var(--text4)"></span></div>
+          <div class="sec-head"><span class="sec-title">Student Roster</span><span style="display:flex;align-items:center;gap:14px"><span id="studentCount" style="font-size:12px;color:var(--text4)"></span><a href="manage-students.html" style="font-size:12.5px;color:var(--brand);font-weight:600;text-decoration:none">Manage Students →</a></span></div>
           <div class="student-table">
             <div class="student-thead">
               <span>#</span><span>Student</span><span>Score</span><span>Tasks Done</span><span>Badge</span><span>Status</span>
@@ -199,7 +225,7 @@ document.getElementById('compList').innerHTML = companies.map(c => `
       </div>
       <div class="comp-referred">${c.filled}/${c.slots} referred</div>
     </div>
-    <div class="rubric-bar" style="height:6px;border-radius:3px">
+    <div class="rubric-bar-outer" style="height:6px;border-radius:3px">
       <div class="rubric-bar-inner" style="width:${(c.filled/c.slots*100).toFixed(0)}%;border-radius:3px"></div>
     </div>
     <div style="display:flex;justify-content:space-between;margin-top:8px">

@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="images/favicon.png">
 <title>Feed — Unresume</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -53,9 +54,9 @@
   <div class="feed-sidebar">
     <div class="feed-header">
       <div style="display:flex;align-items:center">
-        <div style="background:#fff;border-radius:8px;padding:3px 9px;display:flex;align-items:center;box-shadow:0 2px 10px rgba(91,108,245,.2)">
-          <img src="images/unresume-logo.png" alt="Unresume" style="height:22px;display:block;width:auto">
-        </div>
+        <a href="index.html" style="display:flex;align-items:center">
+          <img src="images/unresume-logo.png" alt="Unresume" class="logo-img-sm">
+        </a>
       </div>
     </div>
     <div style="padding:10px 0">
@@ -63,7 +64,6 @@
       <a class="feed-nav-item" href="leaderboard.html"><span class="material-symbols-rounded" style="font-size:20px">leaderboard</span> Leaderboard</a>
       <a class="feed-nav-item" href="jobs.html"><span class="material-symbols-rounded" style="font-size:20px">work</span> Jobs</a>
       <a class="feed-nav-item" href="portfolio-gallery.html"><span class="material-symbols-rounded" style="font-size:20px">photo_library</span> Gallery</a>
-      <a class="feed-nav-item" href="browse-candidates.html"><span class="material-symbols-rounded" style="font-size:20px">group</span> Candidates</a>
       <a class="feed-nav-item" href="chat.html"><span class="material-symbols-rounded" style="font-size:20px">chat</span> Messages</a>
       <a class="feed-nav-item" href="candidate-dashboard.html"><span class="material-symbols-rounded" style="font-size:20px">dashboard</span> Dashboard</a>
       <div style="height:1px;background:var(--border);margin:10px 18px"></div>
@@ -213,7 +213,7 @@ document.getElementById('whoToFollow').innerHTML = candidates.map((c, i) => {
 // Trending skills
 const skills = ['React','Python','UI/UX','Node.js','Data Science','Figma'];
 document.getElementById('trendSkills').innerHTML = skills.map(s =>
-  `<a href="browse-candidates.html" class="cat-pill" style="font-size:12px">${s}</a>`
+  `<a href="jobs.html" class="cat-pill" style="font-size:12px">${s}</a>`
 ).join('');
 
 render();

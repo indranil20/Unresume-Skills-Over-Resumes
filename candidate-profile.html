@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="images/favicon.png">
 <title>Candidate Profile — Unresume</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -114,7 +115,7 @@ const typeColor = {design:'var(--purple)',code:'var(--cyan)',data:'var(--brand)'
 
 const params = new URLSearchParams(location.search);
 const username = params.get('u');
-const isOwner = !username || username === 'jayd'; // simulate owner if no user param or is "self"
+const isOwner = !username || username === 'jay-dev'; // simulate owner if no user param or is "self"
 
 const candidates = getCandidates();
 const c = username ? candidates.find(x => x.username === username) : candidates[0];
@@ -148,7 +149,7 @@ if (!c) {
 
   document.getElementById('profActions').innerHTML = isOwner
     ? `<a href="candidate-dashboard.html" class="btn-ghost" style="font-size:13px;padding:9px 16px">My Dashboard</a>
-       <button class="btn-primary" style="font-size:13px;padding:9px 18px" onclick="alert('Edit profile coming soon!')">Edit Profile</button>`
+       <a href="edit-profile.html" class="btn-primary" style="font-size:13px;padding:9px 18px">Edit Profile</a>`
     : `<button class="btn-ghost" style="font-size:13px;padding:9px 16px" onclick="this.textContent=this.textContent==='Following'?'Follow':'Following'">Follow</button>
        <a href="chat.html" class="btn-primary" style="font-size:13px;padding:9px 18px">Message</a>`;
 

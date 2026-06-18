@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<link rel="icon" type="image/png" href="images/favicon.png">
 <title>Job Detail — Unresume</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -78,7 +79,18 @@
 const params = new URLSearchParams(location.search);
 const id = parseInt(params.get('id'));
 const jobs = getJobs(), tasks = getTasks();
-const job = jobs.find(j => j.id === id) || jobs[0];
+const job = jobs.find(j => j.id === id);
+
+if (!job) {
+  document.getElementById('breadTitle').textContent = 'Not found';
+  document.getElementById('jdMain').innerHTML = `<div class="section-card" style="text-align:center;padding:60px 24px">
+    <span class="material-symbols-rounded" style="font-size:40px;color:var(--text4);display:block;margin-bottom:12px">search_off</span>
+    <p style="color:var(--text3);font-size:14px;margin-bottom:16px">This job listing doesn't exist or may have been removed.</p>
+    <a href="jobs.html" class="back-link">← Back to all jobs</a>
+  </div>`;
+  throw new Error('Job not found');
+}
+
 const task = job.hasTask ? tasks.find(t => t.jobId === job.id) : null;
 
 document.title = `${job.title} — Unresume`;
@@ -141,7 +153,7 @@ document.getElementById('jdMain').innerHTML = `
       ${task.rubric.map(r=>`
         <div class="rubric-row">
           <div style="font-size:13px;color:var(--text2);font-weight:600">${r.criterion}</div>
-          <div class="rubric-bar-outer"><div class="rubric-bar-inner" style="width:${(r.points/40)*100}%"></div></div>
+          <div class="rubric-bar-outer"><div class="rubric-bar-inner" style="width:${r.points}%"></div></div>
           <div style="font-size:12px;font-weight:700;color:var(--brand);font-family:var(--font-mono);text-align:right">${r.points}pts</div>
         </div>`).join('')}
     </div>
@@ -177,7 +189,6 @@ document.getElementById('jdAside').innerHTML = `
       <div style="width:38px;height:38px;border-radius:9px;background:var(--bg-elevated);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:20px">${job.logo}</div>
       <div><div style="font-weight:700;color:var(--text1);font-size:14px">${job.company}</div><div style="font-size:12px;color:var(--text4)">${job.category}</div></div>
     </div>
-    <a href="browse-candidates.html" style="display:block;margin-top:14px;font-size:13px;color:var(--brand);font-weight:600">Browse other candidates →</a>
   </div>
 
   <div class="aside-card">

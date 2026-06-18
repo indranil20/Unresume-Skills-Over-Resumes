@@ -17,10 +17,10 @@ function renderNavbar() {
 
       <div class="nav-links" id="navLinks">
         <a href="jobs.html" class="nav-link ${isActive('jobs.html')}">Jobs</a>
-        <a href="browse-candidates.html" class="nav-link ${isActive('browse-candidates.html')}">Browse</a>
         <a href="leaderboard.html" class="nav-link ${isActive('leaderboard.html')}">Leaderboard</a>
         <a href="portfolio-gallery.html" class="nav-link ${isActive('portfolio-gallery.html')}">Portfolio</a>
         <a href="about.html" class="nav-link ${isActive('about.html')}">About</a>
+        <a href="contact.html" class="nav-link ${isActive('contact.html')}">Contact</a>
       </div>
 
       <div class="nav-actions" id="navActions">
@@ -35,7 +35,6 @@ function renderNavbar() {
 
     <div class="nav-mobile" id="navMobile">
       <a href="jobs.html" class="nav-mobile-link">Jobs</a>
-      <a href="browse-candidates.html" class="nav-mobile-link">Browse Candidates</a>
       <a href="leaderboard.html" class="nav-mobile-link">Leaderboard</a>
       <a href="portfolio-gallery.html" class="nav-mobile-link">Portfolio Gallery</a>
       <a href="about.html" class="nav-mobile-link">About</a>
@@ -73,7 +72,6 @@ function renderFooter() {
           <div class="footer-col">
             <div class="footer-col-title">Platform</div>
             <a href="jobs.html" class="footer-link">Browse Jobs</a>
-            <a href="browse-candidates.html" class="footer-link">Find Candidates</a>
             <a href="leaderboard.html" class="footer-link">Leaderboard</a>
             <a href="portfolio-gallery.html" class="footer-link">Portfolio</a>
           </div>
@@ -111,6 +109,7 @@ const sidebarConfig = {
     accentBg: 'rgba(91,108,245,.12)',
     nav: [
       { icon:'dashboard',  label:'Dashboard',  href:'candidate-dashboard.html' },
+      { icon:'work',       label:'Jobs',       href:'jobs.html' },
       { icon:'task_alt',   label:'My Tasks',   href:'task-workplace.html' },
       { icon:'photo_library', label:'Portfolio', href:'candidate-profile.html' },
       { icon:'chat',       label:'Messages',   href:'chat.html' },
@@ -127,7 +126,6 @@ const sidebarConfig = {
     nav: [
       { icon:'dashboard',   label:'Dashboard',   href:'hr-dashboard.html' },
       { icon:'group',       label:'Candidates',  href:'browse-candidates.html' },
-      { icon:'work',        label:'Job Listings', href:'jobs.html' },
       { icon:'chat',        label:'Messages',    href:'chat.html' },
     ],
   },
@@ -151,8 +149,9 @@ const sidebarConfig = {
     accentBg: 'rgba(128,64,216,.12)',
     nav: [
       { icon:'dashboard', label:'Dashboard',  href:'academy-dashboard.html' },
-      { icon:'group',     label:'Students',   href:'academy-dashboard.html' },
-      { icon:'work',      label:'Placements', href:'placements.html' },
+      { icon:'group',     label:'Students',   href:'manage-students.html' },
+      { icon:'work',      label:'Jobs',       href:'academy-jobs.html' },
+      { icon:'handshake', label:'Placements', href:'placements.html' },
     ],
   },
 };
@@ -199,6 +198,20 @@ function renderSidebar(role = 'candidate') {
     </div>
   </aside>`;
 }
+
+// ── Topbar popovers (notifications / avatar menu) ──────────
+function toggleTopbarPopover(trigger) {
+  const panel = trigger.parentElement.querySelector('.popover-panel');
+  const isOpen = panel.classList.contains('open');
+  document.querySelectorAll('.popover-panel.open').forEach(p => p.classList.remove('open'));
+  if (!isOpen) panel.classList.add('open');
+}
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.topbar-popover')) {
+    document.querySelectorAll('.popover-panel.open').forEach(p => p.classList.remove('open'));
+  }
+});
 
 // ── Init on load ──────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
